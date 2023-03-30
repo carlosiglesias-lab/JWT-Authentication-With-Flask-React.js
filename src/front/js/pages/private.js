@@ -1,17 +1,25 @@
 import React, { useState, useEffect, useContext } from "react";
 import PropTypes from "prop-types";
-import { Link, useParams } from "react-router-dom";
+import { Link, useParams, useNavigate } from "react-router-dom";
 import { Context } from "../store/appContext";
 import rigoImageUrl from "../../img/rigo-baby.jpg";
 
-export const Single = props => {
+export const Private = props => {
+	const navigate = useNavigate();
 	const { store, actions } = useContext(Context);
 	const params = useParams();
 
+	useEffect(() => {
+		if (!store.currentUserEmail) {
+			navigate("/login");
+		}
+		actions.getCurrentUserEmail();
+	}, []);
+
 	return (
 		<div className="jumbotron">
-			<h1 className="display-4">This will show the demo element: {store.demo[params.theid].title}</h1>
-			<img src={rigoImageUrl} />
+			<h1 className="display-4">HOLA : {store.currentUserEmail}</h1>
+
 			<hr className="my-4" />
 
 			<Link to="/">
@@ -23,6 +31,6 @@ export const Single = props => {
 	);
 };
 
-Single.propTypes = {
+Private.propTypes = {
 	match: PropTypes.object
 };

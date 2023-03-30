@@ -9,7 +9,6 @@ export const Home = () => {
 	return (
 		<div className="text-center mt-5">
 			HOME
-			HOLA : {store.currentUserEmail}
 		</div>
 	);
 };

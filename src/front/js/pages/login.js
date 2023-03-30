@@ -12,7 +12,7 @@ export const Login = () => {
     const [error, setError] = useState(false);
 
     const sendLoginCredencial = async () => {
-        const response = await fetch("https://3001-carlosigles-jwtauthenti-6rsbqb1ucs7.ws-eu83.gitpod.io/api/login", {
+        const response = await fetch(process.env.BACKEND_URL + "/api/login", {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -26,7 +26,7 @@ export const Login = () => {
             const data = await response.json();
             localStorage.setItem("token", data.token);
             await actions.getCurrentUserEmail();
-            navigate("/");
+            navigate("/private");
         } else {
             setError(true);
         }
@@ -41,7 +41,7 @@ export const Login = () => {
             <input name="email" placeholder="email" value={email} onChange={(e) => setEmail(e.target.value)}></input>
 
             <label htmlFor="password"></label>
-            <input name="password" placeholder="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
+            <input name="password" placeholder="password" type="password" value={password} onChange={(e) => setPassword(e.target.value)}></input>
 
             <button className="btn btn-primary" onClick={() => sendLoginCredencial()}>Login</button>
             {error ? <p className="alert alert-danger">Error en credenciales</p> : null}
